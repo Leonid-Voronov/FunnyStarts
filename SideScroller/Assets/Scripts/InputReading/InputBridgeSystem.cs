@@ -8,15 +8,21 @@ namespace TIC.FunnyStarts
     public partial class InputBridgeSystem : SystemBase
     {
         private MovementActions _movementActions; //Have to store reference in System, cause ECS components can't have links to OOP classes
+        private Entity _playerEntity;
 
         protected override void OnCreate()
         {
+            RequireForUpdate<PlayerTag>();
+            RequireForUpdate<InputDirection>();
+
             _movementActions = new MovementActions();
         }
 
         protected override void OnStartRunning()
         {
             _movementActions.Enable();
+            _movementActions.KeyboardMouse.Jump.performed += OnPlayerJump;
+            _playerEntity = SystemAPI.GetSingletonEntity<PlayerTag>();
         }
 
         protected override void OnUpdate()
@@ -31,6 +37,15 @@ namespace TIC.FunnyStarts
         protected override void OnStopRunning()
         {
             _movementActions.Disable();
+            _movementActions.KeyboardMouse.Jump.performed -= OnPlayerJump;
+            _playerEntity = Entity.Null;
+        }
+
+        private void OnPlayerJump (InputAction.CallbackContext callBackContext) 
+        {
+            if (!SystemAPI.Exists(_playerEntity)) return;
+
+            //response to input
         }
     }
 }
