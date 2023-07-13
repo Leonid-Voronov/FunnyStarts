@@ -8,9 +8,9 @@ public partial class DebugSystem : SystemBase
 {
     protected override void OnUpdate()
     {
-        foreach (var jumpRequest in SystemAPI.Query<JumpRequest>()) 
+        foreach (var shootRequest in SystemAPI.Query<ShootRequest>()) 
         {
-            Debug.Log(jumpRequest.playerEntity);  
+            Debug.Log(shootRequest.playerEntity);  
         }
     }
 }
