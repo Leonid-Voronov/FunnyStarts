@@ -10,7 +10,7 @@ public partial class DebugSystem : SystemBase
     {
         foreach (var jumpRequest in SystemAPI.Query<JumpRequest>()) 
         {
-            Debug.Log("ww");
+            Debug.Log(jumpRequest.playerEntity);  
         }
     }
 }

@@ -7,5 +7,6 @@ using UnityEngine;
 namespace TIC.FunnyStarts
 {
     public struct PlayerTag : IComponentData {}
+    public struct RequestTag : IComponentData {}
 }
     

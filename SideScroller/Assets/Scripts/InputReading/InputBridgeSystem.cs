@@ -53,7 +53,9 @@ namespace TIC.FunnyStarts
             {
                 playerEntity = _playerEntity
             };
-            EntityManager.AddComponent<JumpRequest>(newEntity);
+            EntityManager.AddComponentData<JumpRequest>(newEntity, jumpRequest);
+            EntityManager.AddComponent<RequestTag>(newEntity);
+
         }
     }
 }
