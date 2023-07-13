@@ -1,4 +1,5 @@
 using Unity.Entities;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -46,6 +47,13 @@ namespace TIC.FunnyStarts
             if (!SystemAPI.Exists(_playerEntity)) return;
 
             //response to input
+            Entity newEntity = EntityManager.CreateEntity();
+
+            JumpRequest jumpRequest = new JumpRequest()
+            {
+                playerEntity = _playerEntity
+            };
+            EntityManager.AddComponent<JumpRequest>(newEntity);
         }
     }
 }
