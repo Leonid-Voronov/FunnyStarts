@@ -5,6 +5,11 @@ using UnityEngine.InputSystem;
 
 namespace TIC.FunnyStarts
 {
+    /*
+     * Summary
+     * This system connects generated C# script of input asset from InputSystem library and ECS architecture
+     */
+
     [UpdateInGroup(typeof(InitializationSystemGroup), OrderLast = true)]
     public partial class InputBridgeSystem : SystemBase
     {

@@ -6,6 +6,11 @@ using UnityEngine;
 
 namespace TIC.FunnyStarts
 {
+    /*
+     * Summary
+     * This system deletes requests at init of every frame
+     */
+
     [UpdateInGroup(typeof(InitializationSystemGroup), OrderLast = false)]
     public partial class InputRequestDeleter : SystemBase
     {
