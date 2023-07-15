@@ -1,10 +1,26 @@
 using Unity.Entities;
+using Unity.Mathematics;
 using UnityEngine;
 
-public partial class DirectionProjecter : SystemBase
+
+namespace TIC.FunnyStarts
 {
-    protected override void OnUpdate()
+    [UpdateInGroup(typeof(SimulationSystemGroup))]
+    public partial class DirectionProjecter : SystemBase
     {
-        //throw new System.NotImplementedException();
+        //Add OnCreate somewhere here
+
+
+        protected override void OnUpdate()
+        {
+            foreach (var inputDirection in SystemAPI.Query<RefRO<InputDirection>>())
+            {
+                float2 inputDirectionValue = inputDirection.ValueRO.value;
+                float3 forward = new float3 (inputDirectionValue.y, 0.0f, inputDirectionValue.x); //not sure about this line
+
+                //GetNormalOfSurface
+            }
+        }
     }
 }
+
