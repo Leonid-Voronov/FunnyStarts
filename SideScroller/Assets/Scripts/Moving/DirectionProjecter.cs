@@ -8,7 +8,7 @@ namespace TIC.FunnyStarts
     [UpdateInGroup(typeof(SimulationSystemGroup))]
     public partial class DirectionProjecter : SystemBase
     {
-        //Add OnCreate somewhere here
+        //Add OnCreate somewhere heren
 
 
         protected override void OnUpdate()
