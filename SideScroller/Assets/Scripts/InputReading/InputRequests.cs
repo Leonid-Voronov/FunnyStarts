@@ -21,9 +21,6 @@ namespace TIC.FunnyStarts
         public Entity playerEntity;
     }
 
-    public struct MousePositionData : IComponentData
-    {
-        public float2 mousePosition;
-    }
+    
 }
 
