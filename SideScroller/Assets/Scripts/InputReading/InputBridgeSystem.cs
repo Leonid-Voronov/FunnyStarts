@@ -1,4 +1,5 @@
 using Unity.Entities;
+using Unity.Mathematics;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -66,7 +67,6 @@ namespace TIC.FunnyStarts
         private void OnPlayerShoot (InputAction.CallbackContext callbackContext)
         {
             if (!SystemAPI.Exists(_playerEntity)) return;
-
             Entity newEntity = EntityManager.CreateEntity();
             ShootRequest shootRequest = new ShootRequest()
             {
@@ -75,6 +75,6 @@ namespace TIC.FunnyStarts
             EntityManager.AddComponentData<ShootRequest>(newEntity, shootRequest);
             EntityManager.AddComponent<RequestTag>(newEntity);
         }
-    }
+    } 
 }
 
