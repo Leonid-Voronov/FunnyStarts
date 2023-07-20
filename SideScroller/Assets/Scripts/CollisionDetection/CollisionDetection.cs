@@ -1,15 +1,14 @@
-using Events;
-using System.Collections;
-using System.Collections.Generic;
 using TIC.FunnyStarts;
-using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Physics;
 using Unity.Physics.Stateful;
-using UnityEngine;
-using UnityEngine.ProBuilder;
 
+
+/*
+ * Summary
+ * This system detects collision between PhysicsShape entities and PhysicsBody entities
+ */
 public partial class CollisionDetection : SystemBase
 {
     protected override void OnUpdate()
@@ -21,7 +20,6 @@ public partial class CollisionDetection : SystemBase
                 for (int i = 0; i < buffer.Length ; i++) 
                 {
                     var statefulCollisionEvent = buffer[i];
-                    if (statefulCollisionEvent.State != StatefulEventState.Enter) continue;
 
                     float3 normal = statefulCollisionEvent.Normal;
                     WriteNormalToComponent(GetPVEntity(statefulCollisionEvent), normal);
