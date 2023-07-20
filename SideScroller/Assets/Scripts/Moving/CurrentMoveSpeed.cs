@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace TIC.FunnyStarts
 {
-    public struct Speed : IComponentData
+    public struct CurrentMoveSpeed : IComponentData
     {
         public float value;
     }

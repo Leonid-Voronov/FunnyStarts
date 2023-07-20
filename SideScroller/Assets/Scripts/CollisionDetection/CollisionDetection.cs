@@ -4,13 +4,16 @@ using Unity.Mathematics;
 using Unity.Physics;
 using Unity.Physics.Stateful;
 
-
 /*
  * Summary
  * This system detects collision between PhysicsShape entities and PhysicsBody entities
  */
 public partial class CollisionDetection : SystemBase
 {
+    protected override void OnCreate()
+    {
+        RequireForUpdate<StatefulCollisionEvent>();
+    }
     protected override void OnUpdate()
     {
         foreach (var buffer in SystemAPI.Query<DynamicBuffer<StatefulCollisionEvent>>())
@@ -23,7 +26,6 @@ public partial class CollisionDetection : SystemBase
 
                     float3 normal = statefulCollisionEvent.Normal;
                     WriteNormalToComponent(GetPVEntity(statefulCollisionEvent), normal);
-                    
                 }
             }
         }
