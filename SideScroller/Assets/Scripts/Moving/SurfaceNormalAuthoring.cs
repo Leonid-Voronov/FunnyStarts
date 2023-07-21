@@ -1,27 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
-using TIC.FunnyStarts;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class SurfaceNormalAuthoring : MonoBehaviour
+namespace TIC.FunnyStarts
 {
-    public float3 value;
-}
-
-public class SurfaceNormalBaker : Baker<SurfaceNormalAuthoring>
-{
-    public override void Bake(SurfaceNormalAuthoring authoring)
+    public class SurfaceNormalAuthoring : MonoBehaviour
     {
-        Entity entity = GetEntity(TransformUsageFlags.Dynamic);
+        public float3 value;
+    }
 
-        SurfaceNormal component = new SurfaceNormal()
+    public class SurfaceNormalBaker : Baker<SurfaceNormalAuthoring>
+    {
+        public override void Bake(SurfaceNormalAuthoring authoring)
         {
-            value = authoring.value
-        };
+            Entity entity = GetEntity(TransformUsageFlags.Dynamic);
 
-        AddComponent(entity, component);
+            SurfaceNormal component = new SurfaceNormal()
+            {
+                value = authoring.value
+            };
 
+            AddComponent(entity, component);
+
+        }
     }
 }
+
+

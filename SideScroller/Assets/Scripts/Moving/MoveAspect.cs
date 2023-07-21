@@ -1,18 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Unity.Entities;
+using Unity.Physics;
 
-public class MoveAspect : MonoBehaviour
+namespace TIC.FunnyStarts
 {
-    // Start is called before the first frame update
-    void Start()
+    public readonly partial struct MoveAspect : IAspect
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public readonly RefRO<MovingDirection> movingDirection;
+        public readonly RefRO<CurrentMoveSpeed> currentMoveSpeed;
+        public readonly RefRW<PhysicsVelocity> physicsVelocity;
     }
 }
+
