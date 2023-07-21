@@ -1,24 +1,31 @@
 using Unity.Entities;
 using Unity.Mathematics;
-using UnityEngine;
-
 
 namespace TIC.FunnyStarts
 {
+    /*
+     * Summary
+     * This system calculates direcion of moving for entities on surfaces based on InputDirection and Surface normal
+     */
     [UpdateInGroup(typeof(SimulationSystemGroup))]
     public partial class DirectionProjecter : SystemBase
     {
-        //Add OnCreate somewhere heren
-
+        protected override void OnCreate()
+        {
+            RequireForUpdate<InputDirection>();
+            RequireForUpdate<SurfaceNormal>();
+            RequireForUpdate<MovingDirection>();
+        }
 
         protected override void OnUpdate()
         {
-            foreach (var inputDirection in SystemAPI.Query<RefRO<InputDirection>>())
+            foreach (DirectionProjectionAspect directionProjectionAspect in SystemAPI.Query<DirectionProjectionAspect>())
             {
-                float2 inputDirectionValue = inputDirection.ValueRO.value;
-                float3 forward = new float3 (inputDirectionValue.y, 0.0f, inputDirectionValue.x); //not sure about this line
+                float2 inputDirectionValue = directionProjectionAspect.inputDirection.ValueRO.value;
+                float3 forward = new float3(inputDirectionValue.x, 0.0f, inputDirectionValue.y);
+                float3 normal = directionProjectionAspect.surfaceNormal.ValueRO.value;
 
-                //GetNormalOfSurface
+                directionProjectionAspect.movingDirection.ValueRW.value = forward - math.dot(forward, normal) * normal;
             }
         }
     }

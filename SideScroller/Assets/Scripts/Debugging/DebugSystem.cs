@@ -10,7 +10,7 @@ public partial class DebugSystem : SystemBase
     {
         foreach (var shootRequest in SystemAPI.Query<ShootRequest>()) 
         {
-            Debug.Log(shootRequest.playerEntity);  
+            //Debug.Log(shootRequest.playerEntity);  
         }
     }
 }
