@@ -7,10 +7,11 @@ namespace TIC.FunnyStarts
 {
     public partial class ScreenCursorPositionWriter : SystemBase
     {
+        
         protected override void OnCreate()
         {
-            EntityManager.CreateSingleton<MousePositionData>();
-            SystemAPI.SetSingleton<MousePositionData>( new MousePositionData { mousePosition = new float2(0,0)});
+            EntityManager.CreateSingleton<MousePosition>();
+            SystemAPI.SetSingleton<MousePosition>( new MousePosition { _mousePosition = new float2(0,0)});
             Debug.Log(SystemAPI.GetSingleton<WorldCursorPosition>()._worldCursorPosition);
         }
 
@@ -21,12 +22,11 @@ namespace TIC.FunnyStarts
 
         private void WriteCursorPosition()
         {
-            foreach (var inputDirection in SystemAPI.Query<RefRW<ShootRequest>>())
+            foreach (var shootRequest in SystemAPI.Query<RefRO<ShootRequest>>())
             {
-                MousePositionData position = SystemAPI.GetSingleton<MousePositionData>();
-                position.mousePosition = Mouse.current.position.value;
-                SystemAPI.SetSingleton<MousePositionData>(position);
-                Debug.Log(SystemAPI.GetSingleton<MousePositionData>().mousePosition);
+                MousePosition position = SystemAPI.GetSingleton<MousePosition>();
+                position._mousePosition = Mouse.current.position.value;
+                SystemAPI.SetSingleton<MousePosition>(position);
             }
         }
     }

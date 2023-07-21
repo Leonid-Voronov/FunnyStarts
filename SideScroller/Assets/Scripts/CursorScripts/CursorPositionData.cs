@@ -1,14 +1,13 @@
 ﻿using Unity.Entities;
 using Unity.Mathematics;
-using UnityEngine;
 
 namespace TIC.FunnyStarts
 {
     //public class WorldCursorPositionWrapper : ComponentDataWrapper<WorldCursorPosition> {}
     [System.Serializable]
-    public struct MousePositionData : IComponentData
+    public struct MousePosition : IComponentData
     {
-        public float2 mousePosition;
+        public float2 _mousePosition;
     }
     
     [System.Serializable]
