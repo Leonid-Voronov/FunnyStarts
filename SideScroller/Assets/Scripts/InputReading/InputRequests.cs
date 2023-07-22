@@ -2,7 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Entities;
-using UnityEngine;
+using Unity.Mathematics;
+using UnityEngine.InputSystem;
 
 namespace TIC.FunnyStarts
 {
@@ -20,6 +21,6 @@ namespace TIC.FunnyStarts
         public Entity playerEntity;
     }
 
-
+    
 }
 
