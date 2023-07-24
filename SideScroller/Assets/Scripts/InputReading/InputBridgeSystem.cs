@@ -42,8 +42,35 @@ namespace TIC.FunnyStarts
                 inputDirection.ValueRW.value = moveDirection.ReadValue<Vector2>();
             }
 
-            InputAction jumpHold = _movementActions.KeyboardMouse.JumpHold;
-            Debug.Log(jumpHold.ReadValue<float>());
+            foreach (var inputJumpHold in SystemAPI.Query<RefRW<InputJumpHold>>())
+            {
+                InputAction inputJumpHoldAction = _movementActions.KeyboardMouse.JumpHold;
+                inputJumpHold.ValueRW.value = inputJumpHoldAction.ReadValue<float>();
+            }
+
+            foreach (var inputAim in SystemAPI.Query<RefRW<InputAim>>())
+            {
+                InputAction inputAimAction = _movementActions.KeyboardMouse.Aim;
+                inputAim.ValueRW.value = inputAimAction.ReadValue<float>();
+            }
+
+            foreach (var inputBlock in SystemAPI.Query<RefRW<InputBlock>>())
+            {
+                InputAction inputBlockAction = _movementActions.KeyboardMouse.Block;
+                inputBlock.ValueRW.value = inputBlockAction.ReadValue<float>();
+            }
+
+            foreach (var inputSprint in SystemAPI.Query<RefRW<InputSprint>>())
+            {
+                InputAction inputSprintAction = _movementActions.KeyboardMouse.Sprint;
+                inputSprint.ValueRW.value = inputSprintAction.ReadValue<float>();
+            }
+
+            foreach (var inputCrouch in SystemAPI.Query<RefRW<InputCrouch>>())
+            {
+                InputAction inputCrouchAction = _movementActions.KeyboardMouse.Crouch;
+                inputCrouch.ValueRW.value = inputCrouchAction.ReadValue<float>();
+            }
         }
 
         protected override void OnStopRunning()

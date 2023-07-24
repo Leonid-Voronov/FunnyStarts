@@ -1,18 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Entities;
 using UnityEngine;
 
-public class InputBlockAuthoring : MonoBehaviour
+namespace TIC.FunnyStarts
 {
-    // Start is called before the first frame update
-    void Start()
+    public class InputBlockAuthoring : MonoBehaviour
     {
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    public class InputBlockBaker : Baker<InputBlockAuthoring>
     {
-        
+        public override void Bake(InputBlockAuthoring authoring)
+        {
+            Entity entity = GetEntity(TransformUsageFlags.Dynamic);
+            InputBlock component = new InputBlock();
+            AddComponent(entity, component);
+        }
     }
 }

@@ -62,6 +62,42 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Aim"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""ef33624d-b018-48e9-949c-9a909c2137f8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Crouch"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""b7a9de1a-53ca-4b62-99a8-9ba600d52edf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Block"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""23772d26-56d5-433c-a3ff-a28f7a7668d9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Sprint"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""0f2dd8e7-49b6-414c-a696-63cbf14a076a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -152,6 +188,50 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
                     ""action"": ""JumpHold"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1b8cede2-acc4-4982-b624-52a245d22256"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b13cc13c-6a7a-4993-b49a-0617c5e2d3e3"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0dd1d7d0-1546-4459-be61-2d91dd8cec71"",
+                    ""path"": ""<Keyboard>/v"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Block"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b716cf6a-93ab-4005-bc6c-9d347f0439db"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -164,6 +244,10 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
         m_KeyboardMouse_Jump = m_KeyboardMouse.FindAction("Jump", throwIfNotFound: true);
         m_KeyboardMouse_Shoot = m_KeyboardMouse.FindAction("Shoot", throwIfNotFound: true);
         m_KeyboardMouse_JumpHold = m_KeyboardMouse.FindAction("JumpHold", throwIfNotFound: true);
+        m_KeyboardMouse_Aim = m_KeyboardMouse.FindAction("Aim", throwIfNotFound: true);
+        m_KeyboardMouse_Crouch = m_KeyboardMouse.FindAction("Crouch", throwIfNotFound: true);
+        m_KeyboardMouse_Block = m_KeyboardMouse.FindAction("Block", throwIfNotFound: true);
+        m_KeyboardMouse_Sprint = m_KeyboardMouse.FindAction("Sprint", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -229,6 +313,10 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_KeyboardMouse_Jump;
     private readonly InputAction m_KeyboardMouse_Shoot;
     private readonly InputAction m_KeyboardMouse_JumpHold;
+    private readonly InputAction m_KeyboardMouse_Aim;
+    private readonly InputAction m_KeyboardMouse_Crouch;
+    private readonly InputAction m_KeyboardMouse_Block;
+    private readonly InputAction m_KeyboardMouse_Sprint;
     public struct KeyboardMouseActions
     {
         private @MovementActions m_Wrapper;
@@ -237,6 +325,10 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_KeyboardMouse_Jump;
         public InputAction @Shoot => m_Wrapper.m_KeyboardMouse_Shoot;
         public InputAction @JumpHold => m_Wrapper.m_KeyboardMouse_JumpHold;
+        public InputAction @Aim => m_Wrapper.m_KeyboardMouse_Aim;
+        public InputAction @Crouch => m_Wrapper.m_KeyboardMouse_Crouch;
+        public InputAction @Block => m_Wrapper.m_KeyboardMouse_Block;
+        public InputAction @Sprint => m_Wrapper.m_KeyboardMouse_Sprint;
         public InputActionMap Get() { return m_Wrapper.m_KeyboardMouse; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -258,6 +350,18 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
             @JumpHold.started += instance.OnJumpHold;
             @JumpHold.performed += instance.OnJumpHold;
             @JumpHold.canceled += instance.OnJumpHold;
+            @Aim.started += instance.OnAim;
+            @Aim.performed += instance.OnAim;
+            @Aim.canceled += instance.OnAim;
+            @Crouch.started += instance.OnCrouch;
+            @Crouch.performed += instance.OnCrouch;
+            @Crouch.canceled += instance.OnCrouch;
+            @Block.started += instance.OnBlock;
+            @Block.performed += instance.OnBlock;
+            @Block.canceled += instance.OnBlock;
+            @Sprint.started += instance.OnSprint;
+            @Sprint.performed += instance.OnSprint;
+            @Sprint.canceled += instance.OnSprint;
         }
 
         private void UnregisterCallbacks(IKeyboardMouseActions instance)
@@ -274,6 +378,18 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
             @JumpHold.started -= instance.OnJumpHold;
             @JumpHold.performed -= instance.OnJumpHold;
             @JumpHold.canceled -= instance.OnJumpHold;
+            @Aim.started -= instance.OnAim;
+            @Aim.performed -= instance.OnAim;
+            @Aim.canceled -= instance.OnAim;
+            @Crouch.started -= instance.OnCrouch;
+            @Crouch.performed -= instance.OnCrouch;
+            @Crouch.canceled -= instance.OnCrouch;
+            @Block.started -= instance.OnBlock;
+            @Block.performed -= instance.OnBlock;
+            @Block.canceled -= instance.OnBlock;
+            @Sprint.started -= instance.OnSprint;
+            @Sprint.performed -= instance.OnSprint;
+            @Sprint.canceled -= instance.OnSprint;
         }
 
         public void RemoveCallbacks(IKeyboardMouseActions instance)
@@ -297,5 +413,9 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnJumpHold(InputAction.CallbackContext context);
+        void OnAim(InputAction.CallbackContext context);
+        void OnCrouch(InputAction.CallbackContext context);
+        void OnBlock(InputAction.CallbackContext context);
+        void OnSprint(InputAction.CallbackContext context);
     }
 }
