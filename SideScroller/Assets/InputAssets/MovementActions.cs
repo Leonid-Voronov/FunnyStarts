@@ -53,6 +53,15 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""JumpHold"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""057cffe8-fd07-497a-bb2f-d9f66f0b9ccd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -132,6 +141,17 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
                     ""action"": ""Shoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""13aa4a05-91a5-408b-8f92-fcecb6904e9f"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""JumpHold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -143,6 +163,7 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
         m_KeyboardMouse_MoveDirection = m_KeyboardMouse.FindAction("MoveDirection", throwIfNotFound: true);
         m_KeyboardMouse_Jump = m_KeyboardMouse.FindAction("Jump", throwIfNotFound: true);
         m_KeyboardMouse_Shoot = m_KeyboardMouse.FindAction("Shoot", throwIfNotFound: true);
+        m_KeyboardMouse_JumpHold = m_KeyboardMouse.FindAction("JumpHold", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -207,6 +228,7 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_KeyboardMouse_MoveDirection;
     private readonly InputAction m_KeyboardMouse_Jump;
     private readonly InputAction m_KeyboardMouse_Shoot;
+    private readonly InputAction m_KeyboardMouse_JumpHold;
     public struct KeyboardMouseActions
     {
         private @MovementActions m_Wrapper;
@@ -214,6 +236,7 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
         public InputAction @MoveDirection => m_Wrapper.m_KeyboardMouse_MoveDirection;
         public InputAction @Jump => m_Wrapper.m_KeyboardMouse_Jump;
         public InputAction @Shoot => m_Wrapper.m_KeyboardMouse_Shoot;
+        public InputAction @JumpHold => m_Wrapper.m_KeyboardMouse_JumpHold;
         public InputActionMap Get() { return m_Wrapper.m_KeyboardMouse; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -232,6 +255,9 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
             @Shoot.started += instance.OnShoot;
             @Shoot.performed += instance.OnShoot;
             @Shoot.canceled += instance.OnShoot;
+            @JumpHold.started += instance.OnJumpHold;
+            @JumpHold.performed += instance.OnJumpHold;
+            @JumpHold.canceled += instance.OnJumpHold;
         }
 
         private void UnregisterCallbacks(IKeyboardMouseActions instance)
@@ -245,6 +271,9 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
             @Shoot.started -= instance.OnShoot;
             @Shoot.performed -= instance.OnShoot;
             @Shoot.canceled -= instance.OnShoot;
+            @JumpHold.started -= instance.OnJumpHold;
+            @JumpHold.performed -= instance.OnJumpHold;
+            @JumpHold.canceled -= instance.OnJumpHold;
         }
 
         public void RemoveCallbacks(IKeyboardMouseActions instance)
@@ -267,5 +296,6 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
         void OnMoveDirection(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+        void OnJumpHold(InputAction.CallbackContext context);
     }
 }

@@ -1,6 +1,5 @@
 using Unity.Entities;
 using Unity.Mathematics;
-using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace TIC.FunnyStarts
@@ -12,7 +11,6 @@ namespace TIC.FunnyStarts
         {
             EntityManager.CreateSingleton<MousePosition>();
             SystemAPI.SetSingleton<MousePosition>( new MousePosition { _mousePosition = new float2(0,0)});
-            Debug.Log(SystemAPI.GetSingleton<WorldCursorPosition>()._worldCursorPosition);
         }
 
         protected override void OnUpdate()

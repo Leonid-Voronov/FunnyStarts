@@ -41,6 +41,9 @@ namespace TIC.FunnyStarts
                 InputAction moveDirection = _movementActions.KeyboardMouse.MoveDirection;
                 inputDirection.ValueRW.value = moveDirection.ReadValue<Vector2>();
             }
+
+            InputAction jumpHold = _movementActions.KeyboardMouse.JumpHold;
+            Debug.Log(jumpHold.ReadValue<float>());
         }
 
         protected override void OnStopRunning()
