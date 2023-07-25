@@ -1,5 +1,6 @@
 ﻿using Unity.Entities;
 using Unity.Mathematics;
+using UnityEngine;
 
 namespace TIC.FunnyStarts
 {
@@ -10,9 +11,12 @@ namespace TIC.FunnyStarts
         */
         protected override void OnUpdate()
         {
-            WorldCursorPosition wp = SystemAPI.GetSingleton<WorldCursorPosition>();
-            float3 pos3 = new float3(0,0,0);
-            GizmosDrawer.gizmos.WriteData(pos3, wp._worldCursorPosition);
+            foreach (var shootRequest in SystemAPI.Query<RefRO<ShootRequest>>())
+            {
+                WorldCursorPosition wp = SystemAPI.GetSingleton<WorldCursorPosition>();
+                float3 pos3 = new float3(0, 0, 0);
+                GizmosDrawer.gizmos.WriteData(pos3, wp._worldCursorPosition);
+            }
         }
     }
 }
