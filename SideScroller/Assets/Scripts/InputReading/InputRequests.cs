@@ -21,6 +21,9 @@ namespace TIC.FunnyStarts
         public Entity playerEntity;
     }
 
-    
+    public struct ReloadRequest : IComponentData
+    {
+        public Entity playerEntity;
+    }
 }
 

@@ -20,7 +20,13 @@ namespace TIC.FunnyStarts
         protected override void OnCreate()
         {
             RequireForUpdate<PlayerTag>();
+
             RequireForUpdate<InputDirection>();
+            RequireForUpdate<InputJumpHold>();
+            RequireForUpdate<InputAim>();
+            RequireForUpdate<InputBlock>();
+            RequireForUpdate<InputSprint>();
+            RequireForUpdate<InputCrouch>();
 
             _movementActions = new MovementActions();
         }
@@ -30,6 +36,7 @@ namespace TIC.FunnyStarts
             _movementActions.Enable();
             _movementActions.KeyboardMouse.Jump.performed += OnPlayerJump;
             _movementActions.KeyboardMouse.Shoot.performed += OnPlayerShoot;
+            _movementActions.KeyboardMouse.Reload.performed += OnPlayerReload;
 
             _playerEntity = SystemAPI.GetSingletonEntity<PlayerTag>();
         }
@@ -78,6 +85,8 @@ namespace TIC.FunnyStarts
             _movementActions.Disable();
             _movementActions.KeyboardMouse.Jump.performed -= OnPlayerJump;
             _movementActions.KeyboardMouse.Shoot.performed -= OnPlayerShoot;
+            _movementActions.KeyboardMouse.Reload.performed -= OnPlayerReload;
+
             _playerEntity = Entity.Null;
         }
 
@@ -103,6 +112,18 @@ namespace TIC.FunnyStarts
                 playerEntity = _playerEntity
             };
             EntityManager.AddComponentData<ShootRequest>(newEntity, shootRequest);
+            EntityManager.AddComponent<RequestTag>(newEntity);
+        }
+
+        private void OnPlayerReload (InputAction.CallbackContext callbackContext)
+        {
+            if (!SystemAPI.Exists(_playerEntity)) return;
+            Entity newEntity = EntityManager.CreateEntity();
+            ReloadRequest reloadRequest = new ReloadRequest()
+            {
+                playerEntity = _playerEntity
+            };
+            EntityManager.AddComponentData<ReloadRequest>(newEntity, reloadRequest);
             EntityManager.AddComponent<RequestTag>(newEntity);
         }
     } 

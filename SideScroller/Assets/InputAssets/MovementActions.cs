@@ -98,6 +98,15 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""8f11c471-2507-4d30-8a2d-91162a8a354a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -232,6 +241,17 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
                     ""action"": ""Sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2da683ee-1ba5-43e8-acb3-bd1f098f97e9"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -248,6 +268,7 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
         m_KeyboardMouse_Crouch = m_KeyboardMouse.FindAction("Crouch", throwIfNotFound: true);
         m_KeyboardMouse_Block = m_KeyboardMouse.FindAction("Block", throwIfNotFound: true);
         m_KeyboardMouse_Sprint = m_KeyboardMouse.FindAction("Sprint", throwIfNotFound: true);
+        m_KeyboardMouse_Reload = m_KeyboardMouse.FindAction("Reload", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -317,6 +338,7 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_KeyboardMouse_Crouch;
     private readonly InputAction m_KeyboardMouse_Block;
     private readonly InputAction m_KeyboardMouse_Sprint;
+    private readonly InputAction m_KeyboardMouse_Reload;
     public struct KeyboardMouseActions
     {
         private @MovementActions m_Wrapper;
@@ -329,6 +351,7 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
         public InputAction @Crouch => m_Wrapper.m_KeyboardMouse_Crouch;
         public InputAction @Block => m_Wrapper.m_KeyboardMouse_Block;
         public InputAction @Sprint => m_Wrapper.m_KeyboardMouse_Sprint;
+        public InputAction @Reload => m_Wrapper.m_KeyboardMouse_Reload;
         public InputActionMap Get() { return m_Wrapper.m_KeyboardMouse; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -362,6 +385,9 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
+            @Reload.started += instance.OnReload;
+            @Reload.performed += instance.OnReload;
+            @Reload.canceled += instance.OnReload;
         }
 
         private void UnregisterCallbacks(IKeyboardMouseActions instance)
@@ -390,6 +416,9 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
+            @Reload.started -= instance.OnReload;
+            @Reload.performed -= instance.OnReload;
+            @Reload.canceled -= instance.OnReload;
         }
 
         public void RemoveCallbacks(IKeyboardMouseActions instance)
@@ -417,5 +446,6 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnBlock(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
     }
 }
