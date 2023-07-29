@@ -4736,6 +4736,7 @@ GameObject:
   - component: {fileID: 1458454559}
   - component: {fileID: 1458454558}
   - component: {fileID: 1458454557}
+  - component: {fileID: 1458454562}
   m_Layer: 0
   m_Name: PlayerEntity
   m_TagString: Untagged
@@ -4763,7 +4764,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 401d82eedc01c7145aaf0a6c24a0de12, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5161,6 +5162,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9b922e1ffcaa644f82e3e2456883d9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1458454562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1458454536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7d849f6ed953e947a0ea6954432e1ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overrideAsset: {fileID: 11400000, guid: bc6f59f724b20ca489d2a167ddcd638a, type: 2}
+  overrideList:
+  - name: _BaseColor
+    displayName: _BaseColor
+    shaderName: Packages/com.unity.render-pipelines.universal/Shaders/Lit.shader
+    materialName: URPLitMaterial
+    type: 0
+    value: {x: 1, y: 1, z: 1, w: 1}
+    instanceOverride: 1
 --- !u!43 &1488762170
 Mesh:
   m_ObjectHideFlags: 0
