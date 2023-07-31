@@ -12,5 +12,6 @@ namespace TIC.FunnyStarts
     public struct SurfaceTag : IComponentData { }  
     public struct CoverTriggerTag : IComponentData { }
     public struct WallTriggerTag : IComponentData { }
+    public struct EdgeTriggerTag : IComponentData { }
 }
     

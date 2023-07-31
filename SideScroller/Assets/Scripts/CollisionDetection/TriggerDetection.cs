@@ -17,6 +17,7 @@ public partial class TriggerDetection : SystemBase
 
             int coverTriggerCount = 0;
             int wallTriggerCount = 0;
+            int edgeTriggerCount = 0;
 
             if (!buffer.IsEmpty)
             {
@@ -29,12 +30,14 @@ public partial class TriggerDetection : SystemBase
                         coverTriggerCount++;
                     else if (SystemAPI.HasComponent<WallTriggerTag>(environmentEntity))
                         wallTriggerCount++;
-
+                    else if (SystemAPI.HasComponent<EdgeTriggerTag>(environmentEntity))
+                        edgeTriggerCount++;
                 }
             }
 
             aspect.context.ValueRW.nearCover = coverTriggerCount > 0;
             aspect.context.ValueRW.nearWall = wallTriggerCount > 0;
+            aspect.context.ValueRW.nearEdge = edgeTriggerCount > 0;
 
         }
     }

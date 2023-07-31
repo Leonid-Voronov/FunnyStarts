@@ -13,5 +13,6 @@ namespace TIC.FunnyStarts
         [Header("Triggers")]
         public bool nearCover;
         public bool nearWall;
+        public bool nearEdge;
     }
 }
