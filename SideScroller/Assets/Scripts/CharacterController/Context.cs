@@ -15,5 +15,6 @@ namespace TIC.FunnyStarts
         public bool nearWall;
         public bool nearEdge;
         public bool onEdge;
+        public bool onVerticalPlane;
     }
 }

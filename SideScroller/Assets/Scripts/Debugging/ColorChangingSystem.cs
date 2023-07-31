@@ -26,7 +26,7 @@ namespace TIC.FunnyStarts
      * Summary
      * This system changes color of playerEntity based on ColorChangingRequests
      */
-    [UpdateInGroup(typeof(SimulationSystemGroup), OrderLast = true)]
+    [UpdateInGroup(typeof(PresentationSystemGroup), OrderLast = true)]
     public partial class ColorChangingSystem : SystemBase
     {
         private Dictionary<ColorName, float4> keyValuePairs = new Dictionary<ColorName, float4>();

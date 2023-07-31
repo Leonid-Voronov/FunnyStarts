@@ -19,6 +19,7 @@ public partial class TriggerDetection : SystemBase
             int wallTriggerCount = 0;
             int nearEdgeTriggerCount = 0;
             int edgeTriggerCount = 0;
+            int verticalPlaneCount = 0;
 
             if (!buffer.IsEmpty)
             {
@@ -35,6 +36,8 @@ public partial class TriggerDetection : SystemBase
                         nearEdgeTriggerCount++;
                     else if (SystemAPI.HasComponent<EdgeTriggerTag>(environmentEntity))
                         edgeTriggerCount++;
+                    else if (SystemAPI.HasComponent<VerticalPlaneTag>(environmentEntity))
+                        verticalPlaneCount++;
 
                 }
             }
@@ -43,6 +46,7 @@ public partial class TriggerDetection : SystemBase
             aspect.context.ValueRW.nearWall = wallTriggerCount > 0;
             aspect.context.ValueRW.nearEdge = nearEdgeTriggerCount > 0;
             aspect.context.ValueRW.onEdge = edgeTriggerCount > 0;
+            aspect.context.ValueRW.onVerticalPlane = verticalPlaneCount > 0;
 
         }
     }

@@ -1,48 +1,54 @@
-using System.Collections;
-using System.Collections.Generic;
 using TIC.FunnyStarts;
 using Unity.Entities;
-using UnityEngine;
 
-public partial class ContextColorInterpretation : SystemBase
+namespace TIC.FunnyStarts
 {
-    protected override void OnUpdate()
+    [UpdateInGroup(typeof(SimulationSystemGroup))]
+    public partial class ContextColorInterpretation : SystemBase
     {
-        var ecbSingleton = SystemAPI.GetSingleton<BeginPresentationEntityCommandBufferSystem.Singleton>();
-        EntityCommandBuffer ecb = ecbSingleton.CreateCommandBuffer(World.Unmanaged);
-
-        foreach (var context in SystemAPI.Query<RefRO<Context>>())
+        protected override void OnUpdate()
         {
-            Entity newRequest = ecb.CreateEntity();
-            ColorName newColor = ColorName.Horizontal;
+            var ecbSingleton = SystemAPI.GetSingleton<BeginPresentationEntityCommandBufferSystem.Singleton>();
+            EntityCommandBuffer ecb = ecbSingleton.CreateCommandBuffer(World.Unmanaged);
 
-            if (context.ValueRO.nearWall)
+            foreach (var context in SystemAPI.Query<RefRO<Context>>())
             {
-                newColor = ColorName.HorizontalNearWall;
-            }
-            else if (context.ValueRO.nearCover) 
-            {
-                newColor = ColorName.HorizontalNearCover;
-            }
-            else if (context.ValueRO.nearEdge)
-            {
-                newColor = ColorName.HorizontalNearEdge;
-            }
-            else if (context.ValueRO.onEdge)
-            {
-                newColor = ColorName.Edge;
-            }
-            else if (context.ValueRO.onSurface)
-            {
-                newColor = ColorName.Horizontal; //Should be after all triggers
-            }
-            else
-            {
-                newColor = ColorName.Air; //Should be last
-            }
+                Entity newRequest = ecb.CreateEntity();
+                ColorName newColor = ColorName.Horizontal;
 
-            ecb.AddComponent<ColorChangingRequest>(newRequest);
-            ecb.SetComponent<ColorChangingRequest>(newRequest, new ColorChangingRequest() { colorName = newColor });
+                if (context.ValueRO.nearWall)
+                {
+                    newColor = ColorName.HorizontalNearWall;
+                }
+                else if (context.ValueRO.nearCover)
+                {
+                    newColor = ColorName.HorizontalNearCover;
+                }
+                else if (context.ValueRO.nearEdge)
+                {
+                    newColor = ColorName.HorizontalNearEdge;
+                }
+                else if (context.ValueRO.onEdge)
+                {
+                    newColor = ColorName.Edge;
+                }
+                else if (context.ValueRO.onVerticalPlane)
+                {
+                    newColor = ColorName.Vertical;
+                }
+                else if (context.ValueRO.onSurface)
+                {
+                    newColor = ColorName.Horizontal; //Should be after all triggers
+                }
+                else
+                {
+                    newColor = ColorName.Air; //Should be last
+                }
+
+                ecb.AddComponent<ColorChangingRequest>(newRequest);
+                ecb.SetComponent<ColorChangingRequest>(newRequest, new ColorChangingRequest() { colorName = newColor });
+            }
         }
     }
 }
+
