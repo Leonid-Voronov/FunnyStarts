@@ -7,6 +7,10 @@ namespace TIC.FunnyStarts
 {
     public struct Context : IComponentData
     {
+        [Header("Collisions")]
         public bool onSurface;
+
+        [Header("Triggers")]
+        public bool inCoverTrigger;
     }
 }

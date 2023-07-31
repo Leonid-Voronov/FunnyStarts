@@ -10,5 +10,6 @@ namespace TIC.FunnyStarts
     public struct RequestTag : IComponentData {}
     public struct AffectedByContextTag : IComponentData { }
     public struct SurfaceTag : IComponentData { }  
+    public struct CoverTriggerTag : IComponentData { }
 }
     

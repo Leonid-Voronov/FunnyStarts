@@ -12,29 +12,32 @@ namespace TIC.FunnyStarts
 
         public readonly RefRW<Context> context;
         public readonly DynamicBuffer<StatefulCollisionEvent> statefulCollisionEvents;
+        public readonly DynamicBuffer<StatefulTriggerEvent> statefulTriggerEvents;
     }
 
     public partial class CollisionDetection : SystemBase
     {
-        private EntityCommandBuffer entityCommandBuffer;
-        private int surfaceCount = 0;
         protected override void OnCreate()
         {
             RequireForUpdate<StatefulCollisionEvent>();
+            RequireForUpdate<SurfaceTag>();
         }
         protected override void OnUpdate()
         {
             foreach (var aspect in SystemAPI.Query<AffectedByContextAspect>())
             {
+                //Debug.Log("1");
                 Entity affectedEntity = aspect.entity;
                 Context context = aspect.context.ValueRW;
                 DynamicBuffer<StatefulCollisionEvent> buffer = aspect.statefulCollisionEvents;
-                surfaceCount = 0;
+                int surfaceCount = 0;
 
                 if (!buffer.IsEmpty)
                 {
+                    //Debug.Log("2");
                     for (int i = 0; i < buffer.Length; i++)
                     {
+                        //Debug.Log("3");
                         StatefulCollisionEvent collisionEvent = buffer[i];
                         Entity environmentEntity = collisionEvent.GetOtherEntity(affectedEntity);
 
