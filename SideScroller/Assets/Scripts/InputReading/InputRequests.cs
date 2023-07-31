@@ -20,7 +20,4 @@ namespace TIC.FunnyStarts
     {
         public Entity playerEntity;
     }
-
-    
 }
-
