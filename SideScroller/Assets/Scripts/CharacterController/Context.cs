@@ -11,6 +11,7 @@ namespace TIC.FunnyStarts
         public bool onSurface;
 
         [Header("Triggers")]
-        public bool inCoverTrigger;
+        public bool nearCover;
+        public bool nearWall;
     }
 }

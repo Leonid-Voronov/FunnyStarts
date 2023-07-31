@@ -16,6 +16,7 @@ public partial class TriggerDetection : SystemBase
             DynamicBuffer<StatefulTriggerEvent> buffer = aspect.statefulTriggerEvents;
 
             int coverTriggerCount = 0;
+            int wallTriggerCount = 0;
 
             if (!buffer.IsEmpty)
             {
@@ -26,10 +27,14 @@ public partial class TriggerDetection : SystemBase
 
                     if (SystemAPI.HasComponent<CoverTriggerTag>(environmentEntity))
                         coverTriggerCount++;
+                    else if (SystemAPI.HasComponent<WallTriggerTag>(environmentEntity))
+                        wallTriggerCount++;
+
                 }
             }
 
-            aspect.context.ValueRW.inCoverTrigger = coverTriggerCount > 0;
+            aspect.context.ValueRW.nearCover = coverTriggerCount > 0;
+            aspect.context.ValueRW.nearWall = wallTriggerCount > 0;
 
         }
     }
