@@ -22,6 +22,10 @@ namespace TIC.FunnyStarts
         WallCover
     }
 
+    /*
+     * Summary
+     * This system changes color of playerEntity based on ColorChangingRequests
+     */
     [UpdateInGroup(typeof(SimulationSystemGroup), OrderLast = true)]
     public partial class ColorChangingSystem : SystemBase
     {
@@ -48,7 +52,6 @@ namespace TIC.FunnyStarts
         {
             foreach (var colorChangingRequest in SystemAPI.Query<ColorChangingRequest>()) 
             {
-                
                 URPMaterialPropertyBaseColor newColor = new URPMaterialPropertyBaseColor() { Value = GetNewColor(colorChangingRequest.colorName) };
                 SystemAPI.SetComponent<URPMaterialPropertyBaseColor>(_playerEntity, newColor);
             }
