@@ -28,6 +28,10 @@ public partial class ContextColorInterpretation : SystemBase
             {
                 newColor = ColorName.HorizontalNearEdge;
             }
+            else if (context.ValueRO.onEdge)
+            {
+                newColor = ColorName.Edge;
+            }
             else if (context.ValueRO.onSurface)
             {
                 newColor = ColorName.Horizontal; //Should be after all triggers

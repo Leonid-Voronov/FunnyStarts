@@ -5,17 +5,17 @@ using UnityEngine;
 
 namespace TIC.FunnyStarts
 {
-    public class WallTriggerTagAuthoring : MonoBehaviour
+    public class NearCoverTriggerTagAuthoring : MonoBehaviour
     {
 
     }
 
-    public class WallTriggerTagBaker : Baker<WallTriggerTagAuthoring>
+    public class NearCoverTriggerTagBaker : Baker<NearCoverTriggerTagAuthoring>
     {
-        public override void Bake(WallTriggerTagAuthoring authoring)
+        public override void Bake(NearCoverTriggerTagAuthoring authoring)
         {
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
-            WallTriggerTag component = new WallTriggerTag();
+            NearCoverTriggerTag component = new NearCoverTriggerTag();
             AddComponent(entity, component);
         }
     }

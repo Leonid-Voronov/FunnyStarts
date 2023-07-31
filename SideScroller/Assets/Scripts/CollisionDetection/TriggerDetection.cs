@@ -17,6 +17,7 @@ public partial class TriggerDetection : SystemBase
 
             int coverTriggerCount = 0;
             int wallTriggerCount = 0;
+            int nearEdgeTriggerCount = 0;
             int edgeTriggerCount = 0;
 
             if (!buffer.IsEmpty)
@@ -26,18 +27,22 @@ public partial class TriggerDetection : SystemBase
                     StatefulTriggerEvent triggerEvent = buffer[i];
                     Entity environmentEntity = triggerEvent.GetOtherEntity(affectedEntity);
 
-                    if (SystemAPI.HasComponent<CoverTriggerTag>(environmentEntity))
+                    if (SystemAPI.HasComponent<NearCoverTriggerTag>(environmentEntity))
                         coverTriggerCount++;
-                    else if (SystemAPI.HasComponent<WallTriggerTag>(environmentEntity))
+                    else if (SystemAPI.HasComponent<NearWallTriggerTag>(environmentEntity))
                         wallTriggerCount++;
+                    else if (SystemAPI.HasComponent<NearEdgeTriggerTag>(environmentEntity))
+                        nearEdgeTriggerCount++;
                     else if (SystemAPI.HasComponent<EdgeTriggerTag>(environmentEntity))
                         edgeTriggerCount++;
+
                 }
             }
 
             aspect.context.ValueRW.nearCover = coverTriggerCount > 0;
             aspect.context.ValueRW.nearWall = wallTriggerCount > 0;
-            aspect.context.ValueRW.nearEdge = edgeTriggerCount > 0;
+            aspect.context.ValueRW.nearEdge = nearEdgeTriggerCount > 0;
+            aspect.context.ValueRW.onEdge = edgeTriggerCount > 0;
 
         }
     }
