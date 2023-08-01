@@ -16,5 +16,8 @@ namespace TIC.FunnyStarts
         public bool nearEdge;
         public bool onEdge;
         public bool onVerticalPlane;
+
+        [Header("Finite actionContext")]
+        public bool inUnfellableAction;
     }
 }

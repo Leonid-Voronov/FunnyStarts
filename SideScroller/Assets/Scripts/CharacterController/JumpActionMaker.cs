@@ -23,6 +23,7 @@ namespace TIC.FunnyStarts
                     ecb.AddComponent<FiniteAction>(newEntity);
                     ecb.SetComponent(newEntity, new FiniteAction { time = jumpTime, timer = jumpTime });
                     ecb.AddComponent<JumpData>(newEntity);
+                    ecb.AddComponent<UnfellableActionTag>(newEntity);
                 }
             }
             

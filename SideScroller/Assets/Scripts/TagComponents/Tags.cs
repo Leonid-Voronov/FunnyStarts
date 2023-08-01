@@ -15,5 +15,6 @@ namespace TIC.FunnyStarts
     public struct NearEdgeTriggerTag : IComponentData { }
     public struct EdgeTriggerTag : IComponentData { }
     public struct VerticalPlaneTag : IComponentData { }
+    public struct UnfellableActionTag : IComponentData { }
 }
     

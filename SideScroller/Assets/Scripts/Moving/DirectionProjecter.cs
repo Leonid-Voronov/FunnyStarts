@@ -30,7 +30,7 @@ namespace TIC.FunnyStarts
                     float3 normal = directionProjectionAspect.surfaceNormal.ValueRO.value;
                     directionProjectionAspect.movingDirection.ValueRW.value = forward - math.dot(forward, normal) * normal;
                 }
-                else
+                else if (!context.inUnfellableAction)
                 {
                     float3 downDirection = new float3(0, -1f, 0);
                     directionProjectionAspect.movingDirection.ValueRW.value = forward + downDirection;
