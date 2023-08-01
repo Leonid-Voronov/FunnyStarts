@@ -19,5 +19,6 @@ namespace TIC.FunnyStarts
 
         [Header("Finite actionContext")]
         public bool inUnfellableAction;
+        public bool inJump;
     }
 }

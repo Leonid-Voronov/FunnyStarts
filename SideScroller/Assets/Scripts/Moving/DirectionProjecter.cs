@@ -25,7 +25,12 @@ namespace TIC.FunnyStarts
                 float2 inputDirectionValue = directionProjectionAspect.inputDirection.ValueRO.value;
                 float3 forward = new float3(inputDirectionValue.x, 0.0f, inputDirectionValue.y);
 
-                if (context.onSurface)
+                if (context.inJump)
+                {
+                    float3 upDirection = new float3(0, 1f, 0);
+                    directionProjectionAspect.movingDirection.ValueRW.value = forward + upDirection;
+                }
+                else if (context.onSurface)
                 {
                     float3 normal = directionProjectionAspect.surfaceNormal.ValueRO.value;
                     directionProjectionAspect.movingDirection.ValueRW.value = forward - math.dot(forward, normal) * normal;

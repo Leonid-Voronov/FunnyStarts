@@ -8,7 +8,7 @@ namespace TIC.FunnyStarts
     [UpdateInGroup(typeof(SimulationSystemGroup))]
     public partial class JumpActionMaker : SystemBase
     {
-        private const float jumpTime = 2f; //Get from config file?
+        private const float jumpTime = .5f; //Get from config file?
         protected override void OnUpdate()
         {
             var ecbSingleton = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
