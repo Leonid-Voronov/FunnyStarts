@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace TIC.FunnyStarts
 {
-    public  partial class WeaponRaycast : SystemBase
+    public  partial class WeaponRaycaster : SystemBase
     {
         private BeginSimulationEntityCommandBufferSystem.Singleton _eecb;
         protected override void OnStartRunning()

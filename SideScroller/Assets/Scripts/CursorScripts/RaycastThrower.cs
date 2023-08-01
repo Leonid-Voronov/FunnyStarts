@@ -7,7 +7,7 @@ using Unity.Transforms;
 
 namespace TIC.FunnyStarts
 {
-    //[UpdateInGroup(typeof(SimulationSystemGroup), OrderLast = true)]
+    [UpdateInGroup(typeof(SimulationSystemGroup), OrderLast = true)]
     public partial class RaycastThrower : SystemBase
     {
         private BeginSimulationEntityCommandBufferSystem.Singleton _eecb;
@@ -25,10 +25,12 @@ namespace TIC.FunnyStarts
                 if (cam == null)
                     return;
                 var mul = cam.farClipPlane / cam.nearClipPlane;
-                var wp = SystemAPI.GetSingleton<WorldCursorPosition>()._worldCursorPosition;
+                var cp = SystemAPI.GetSingleton<CursorPosition>().cursorPosition;
+                
                 var start = (float3)cam.transform.position;
-                var difX = mul * (wp.x - start.x);
-                var difY = mul * (wp.y - start.y);
+                
+                var difX = mul * (cp.x - start.x);
+                var difY = mul * (cp.y - start.y);
                 var end = new float3(difX, difY, cam.farClipPlane);
                 
                 //This part make Raycast Input struct for make raycast in scene
@@ -38,8 +40,10 @@ namespace TIC.FunnyStarts
                     Filter = CollisionFilter.Default,
                     End = end,
                 };
+                
                 var hit = world.CastRay(input, out var rayResult);
                 var ditPos = math.select(input.End, rayResult.Position, hit);
+                
                 Debug.DrawRay(input.Start,   input.End - input.Start);
 
                 var rayCastData = new ShootRaycast()
