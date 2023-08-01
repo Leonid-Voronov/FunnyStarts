@@ -21,13 +21,24 @@ namespace TIC.FunnyStarts
         {
             foreach (DirectionProjectionAspect directionProjectionAspect in SystemAPI.Query<DirectionProjectionAspect>())
             {
+                Context context = directionProjectionAspect.context.ValueRO;
                 float2 inputDirectionValue = directionProjectionAspect.inputDirection.ValueRO.value;
                 float3 forward = new float3(inputDirectionValue.x, 0.0f, inputDirectionValue.y);
-                float3 normal = directionProjectionAspect.surfaceNormal.ValueRO.value;
 
-                directionProjectionAspect.movingDirection.ValueRW.value = forward - math.dot(forward, normal) * normal;
+                if (context.onSurface)
+                {
+                    float3 normal = directionProjectionAspect.surfaceNormal.ValueRO.value;
+                    directionProjectionAspect.movingDirection.ValueRW.value = forward - math.dot(forward, normal) * normal;
+                }
+                else
+                {
+                    float3 downDirection = new float3(0, -1f, 0);
+                    directionProjectionAspect.movingDirection.ValueRW.value = forward + downDirection;
+                }
             }
         }
     }
+
+
 }
 

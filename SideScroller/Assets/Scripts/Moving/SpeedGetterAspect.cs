@@ -6,6 +6,7 @@ namespace TIC.FunnyStarts
     {
         public readonly RefRO<SpeedParametrs> speedParametrs;
         public readonly RefRW<CurrentMoveSpeed> currentMoveSpeed;
+        public readonly RefRO<Context> context;
     }
 }
 

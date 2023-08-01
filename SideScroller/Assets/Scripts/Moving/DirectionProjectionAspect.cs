@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Entities;
-using UnityEngine;
 
 namespace TIC.FunnyStarts
 {
@@ -10,5 +7,6 @@ namespace TIC.FunnyStarts
         public readonly RefRO<InputDirection> inputDirection;
         public readonly RefRO<SurfaceNormal> surfaceNormal;
         public readonly RefRW<MovingDirection> movingDirection;
+        public readonly RefRO<Context> context;
     }
 }

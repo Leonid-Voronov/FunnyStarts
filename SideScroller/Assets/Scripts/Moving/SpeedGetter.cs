@@ -13,7 +13,12 @@ namespace TIC.FunnyStarts
         {
             foreach (SpeedGetterAspect speedGetterAspect in SystemAPI.Query<SpeedGetterAspect>())
             {
-                speedGetterAspect.currentMoveSpeed.ValueRW.value = speedGetterAspect.speedParametrs.ValueRO.surfaceSpeedParametr;
+                Context context = speedGetterAspect.context.ValueRO;
+
+                if (context.onSurface)
+                    speedGetterAspect.currentMoveSpeed.ValueRW.value = speedGetterAspect.speedParametrs.ValueRO.surfaceSpeedParametr;
+                else
+                    speedGetterAspect.currentMoveSpeed.ValueRW.value = speedGetterAspect.speedParametrs.ValueRO.fellSpeedParametr;
             }
         }
     }

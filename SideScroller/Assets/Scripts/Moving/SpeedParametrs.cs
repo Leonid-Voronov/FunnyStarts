@@ -7,5 +7,6 @@ namespace TIC.FunnyStarts
         public float surfaceSpeedParametr;
         public float climbSpeedParametr;
         public float coverSpeedParametr;
+        public float fellSpeedParametr;
     }
 }

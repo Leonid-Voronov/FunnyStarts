@@ -8480,7 +8480,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1458454536}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.28, y: 7.88, z: 67.51}
+  m_LocalPosition: {x: -19.28, y: 7.47, z: 67.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8755,6 +8755,7 @@ MonoBehaviour:
   surfaceSpeed: 10
   climbSpeed: 7
   coverSpeed: 7
+  fellSpeed: 7
 --- !u!114 &1458454555
 MonoBehaviour:
   m_ObjectHideFlags: 0
