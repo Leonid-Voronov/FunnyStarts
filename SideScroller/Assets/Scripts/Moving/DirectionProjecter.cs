@@ -1,5 +1,6 @@
 using Unity.Entities;
 using Unity.Mathematics;
+using UnityEngine.ProBuilder;
 
 namespace TIC.FunnyStarts
 {
@@ -25,7 +26,18 @@ namespace TIC.FunnyStarts
                 float2 inputDirectionValue = directionProjectionAspect.inputDirection.ValueRO.value;
                 float3 forward = new float3(inputDirectionValue.x, 0.0f, inputDirectionValue.y);
 
-                if (context.inJump)
+                if (context.climbing)
+                {
+                    float3 normal = directionProjectionAspect.surfaceNormal.ValueRO.value;
+
+                    if (normal.x < 0.5f)
+                        forward = new float3(inputDirectionValue.x, inputDirectionValue.y, 0.0f);
+                    else
+                        forward = new float3(0.0f, inputDirectionValue.y, inputDirectionValue.x);
+
+                    directionProjectionAspect.movingDirection.ValueRW.value = forward - math.dot(forward, normal) * normal;
+                }
+                else if (context.inJump)
                 {
                     float3 upDirection = new float3(0, 1f, 0);
                     directionProjectionAspect.movingDirection.ValueRW.value = forward + upDirection;

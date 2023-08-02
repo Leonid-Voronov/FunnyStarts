@@ -14,6 +14,7 @@ namespace TIC.FunnyStarts
     public struct JumpRequest : IComponentData
     {
         public Entity playerEntity;
+        public float2 inputDirection;
     }
 
     public struct ShootRequest : IComponentData

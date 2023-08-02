@@ -2,6 +2,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Physics;
 using Unity.Physics.Stateful;
+using UnityEngine.ProBuilder;
 
 namespace TIC.FunnyStarts
 {
@@ -24,8 +25,8 @@ namespace TIC.FunnyStarts
                     for (int i = 0; i < buffer.Length; i++)
                     {
                         var statefulCollisionEvent = buffer[i];
-
                         float3 normal = statefulCollisionEvent.Normal;
+                        
                         WriteNormalToComponent(GetPVEntity(statefulCollisionEvent), normal);
                     }
                 }
@@ -53,6 +54,11 @@ namespace TIC.FunnyStarts
                 return collisionEvent.EntityB;
             else
                 return Entity.Null;
+        }
+
+        private bool IsNormalHorizontal(float3 normal)
+        {
+            return math.abs(normal.x) < 0.5f && math.abs(normal.z) < 0.5f;
         }
     }
 }

@@ -3,6 +3,7 @@ using Unity.Physics.Stateful;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using Unity.Mathematics;
 
 namespace TIC.FunnyStarts
 {
@@ -26,7 +27,6 @@ namespace TIC.FunnyStarts
         {
             foreach (var aspect in SystemAPI.Query<AffectedByContextAspect>())
             {
-                //Debug.Log("1");
                 Entity affectedEntity = aspect.entity;
                 Context context = aspect.context.ValueRW;
                 DynamicBuffer<StatefulCollisionEvent> buffer = aspect.statefulCollisionEvents;
@@ -34,13 +34,11 @@ namespace TIC.FunnyStarts
 
                 if (!buffer.IsEmpty)
                 {
-                    //Debug.Log("2");
                     for (int i = 0; i < buffer.Length; i++)
                     {
-                        //Debug.Log("3");
                         StatefulCollisionEvent collisionEvent = buffer[i];
                         Entity environmentEntity = collisionEvent.GetOtherEntity(affectedEntity);
-
+                        
                         if (SystemAPI.HasComponent<SurfaceTag>(environmentEntity))
                             surfaceCount++;
                     }
@@ -49,6 +47,7 @@ namespace TIC.FunnyStarts
                 aspect.context.ValueRW.onSurface = surfaceCount > 0;
             }
         }
+
     }
 }
 
