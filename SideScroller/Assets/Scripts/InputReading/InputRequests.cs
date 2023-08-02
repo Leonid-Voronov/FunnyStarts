@@ -26,5 +26,10 @@ namespace TIC.FunnyStarts
     {
         public Entity playerEntity;
     }
+
+    public struct CrouchRequest : IComponentData
+    {
+        public Entity playerEntity;
+    }
 }
 

@@ -37,6 +37,8 @@ namespace TIC.FunnyStarts
             _movementActions.KeyboardMouse.Jump.performed += OnPlayerJump;
             _movementActions.KeyboardMouse.Shoot.performed += OnPlayerShoot;
             _movementActions.KeyboardMouse.Reload.performed += OnPlayerReload;
+            _movementActions.KeyboardMouse.WallRelease.performed += OnPlayerCrouch;
+            
 
             _playerEntity = SystemAPI.GetSingletonEntity<PlayerTag>();
         }
@@ -86,6 +88,7 @@ namespace TIC.FunnyStarts
             _movementActions.KeyboardMouse.Jump.performed -= OnPlayerJump;
             _movementActions.KeyboardMouse.Shoot.performed -= OnPlayerShoot;
             _movementActions.KeyboardMouse.Reload.performed -= OnPlayerReload;
+            _movementActions.KeyboardMouse.WallRelease.performed -= OnPlayerCrouch;
 
             _playerEntity = Entity.Null;
         }
@@ -101,6 +104,23 @@ namespace TIC.FunnyStarts
             };
             EntityManager.AddComponentData<JumpRequest>(newEntity, jumpRequest);
             EntityManager.AddComponent<RequestTag>(newEntity);
+        }
+
+        private void OnPlayerCrouch(InputAction.CallbackContext callbackContext)
+        {
+            if (callbackContext.performed)
+            {
+                if (!SystemAPI.Exists(_playerEntity)) return;
+
+                Entity newEntity = EntityManager.CreateEntity();
+                CrouchRequest crouchRequest = new CrouchRequest()
+                {
+                    playerEntity = _playerEntity
+                };
+                EntityManager.AddComponentData<CrouchRequest>(newEntity, crouchRequest);
+                EntityManager.AddComponent<RequestTag>(newEntity);
+            }
+            
         }
 
         private void OnPlayerShoot (InputAction.CallbackContext callbackContext)

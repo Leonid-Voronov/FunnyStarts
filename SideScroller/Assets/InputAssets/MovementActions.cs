@@ -107,6 +107,15 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""WallRelease"",
+                    ""type"": ""Button"",
+                    ""id"": ""f77b86b0-3102-425e-a288-ec51c046baa4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -252,6 +261,17 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
                     ""action"": ""Reload"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""293f1514-d936-423e-a288-7bea1d413b9a"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WallRelease"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -269,6 +289,7 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
         m_KeyboardMouse_Block = m_KeyboardMouse.FindAction("Block", throwIfNotFound: true);
         m_KeyboardMouse_Sprint = m_KeyboardMouse.FindAction("Sprint", throwIfNotFound: true);
         m_KeyboardMouse_Reload = m_KeyboardMouse.FindAction("Reload", throwIfNotFound: true);
+        m_KeyboardMouse_WallRelease = m_KeyboardMouse.FindAction("WallRelease", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -339,6 +360,7 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_KeyboardMouse_Block;
     private readonly InputAction m_KeyboardMouse_Sprint;
     private readonly InputAction m_KeyboardMouse_Reload;
+    private readonly InputAction m_KeyboardMouse_WallRelease;
     public struct KeyboardMouseActions
     {
         private @MovementActions m_Wrapper;
@@ -352,6 +374,7 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
         public InputAction @Block => m_Wrapper.m_KeyboardMouse_Block;
         public InputAction @Sprint => m_Wrapper.m_KeyboardMouse_Sprint;
         public InputAction @Reload => m_Wrapper.m_KeyboardMouse_Reload;
+        public InputAction @WallRelease => m_Wrapper.m_KeyboardMouse_WallRelease;
         public InputActionMap Get() { return m_Wrapper.m_KeyboardMouse; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -388,6 +411,9 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
             @Reload.started += instance.OnReload;
             @Reload.performed += instance.OnReload;
             @Reload.canceled += instance.OnReload;
+            @WallRelease.started += instance.OnWallRelease;
+            @WallRelease.performed += instance.OnWallRelease;
+            @WallRelease.canceled += instance.OnWallRelease;
         }
 
         private void UnregisterCallbacks(IKeyboardMouseActions instance)
@@ -419,6 +445,9 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
             @Reload.started -= instance.OnReload;
             @Reload.performed -= instance.OnReload;
             @Reload.canceled -= instance.OnReload;
+            @WallRelease.started -= instance.OnWallRelease;
+            @WallRelease.performed -= instance.OnWallRelease;
+            @WallRelease.canceled -= instance.OnWallRelease;
         }
 
         public void RemoveCallbacks(IKeyboardMouseActions instance)
@@ -447,5 +476,6 @@ public partial class @MovementActions: IInputActionCollection2, IDisposable
         void OnBlock(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
+        void OnWallRelease(InputAction.CallbackContext context);
     }
 }

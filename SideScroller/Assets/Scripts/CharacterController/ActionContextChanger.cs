@@ -17,6 +17,12 @@ namespace TIC.FunnyStarts
                 context.ValueRW.inUnfellableAction = unfellableActions.CalculateEntityCount() > 0;
                 context.ValueRW.inJump = jumpActions.CalculateEntityCount() > 0;
                 context.ValueRW.climbing = context.ValueRO.onVerticalPlane && !context.ValueRO.releasedWall && !context.ValueRO.onSurface;
+
+                if (context.ValueRW.releasedWall)
+                {
+                    context.ValueRW.releasedWall = !context.ValueRO.onSurface;
+                }
+                    
             }
         }
     }
