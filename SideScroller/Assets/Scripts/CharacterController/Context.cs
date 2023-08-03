@@ -17,10 +17,11 @@ namespace TIC.FunnyStarts
         public bool onEdge;
         public bool onVerticalPlane;
 
-        [Header("Finite actionContext")]
+        [Header("ActionContext")]
         public bool inUnfellableAction;
         public bool inJump;
         public bool inJumpStartPhase;
+        public bool holdingEdge;
 
         public bool climbing;
         public bool releasedWall;

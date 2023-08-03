@@ -26,10 +26,21 @@ namespace TIC.FunnyStarts
                 float2 inputDirectionValue = directionProjectionAspect.inputDirection.ValueRO.value;
                 float3 forward = new float3(inputDirectionValue.x, 0.0f, inputDirectionValue.y);
 
-                if (context.climbing && !context.inJumpStartPhase)
+                if (context.holdingEdge && !context.inJumpStartPhase)
                 {
                     float3 normal = directionProjectionAspect.surfaceNormal.ValueRO.value;
 
+                    if (normal.x < 0.5f)
+                        forward = new float3(inputDirectionValue.x, 0.0f, 0.0f);
+                    else
+                        forward = new float3(0.0f, 0.0f, inputDirectionValue.x);
+
+
+                    directionProjectionAspect.movingDirection.ValueRW.value = forward - math.dot(forward, normal) * normal;
+                }
+                else if (context.climbing && !context.inJumpStartPhase)
+                {
+                    float3 normal = directionProjectionAspect.surfaceNormal.ValueRO.value;
                     if (normal.x < 0.5f)
                         forward = new float3(inputDirectionValue.x, inputDirectionValue.y, 0.0f);
                     else
@@ -55,6 +66,8 @@ namespace TIC.FunnyStarts
             }
         }
     }
+
+    
 
 
 }

@@ -26,7 +26,7 @@ namespace TIC.FunnyStarts
                 }
 
                 context.ValueRW.climbing = context.ValueRO.onVerticalPlane && !context.ValueRO.releasedWall && !context.ValueRO.onSurface && jumpActionStartPass;
-
+                context.ValueRW.holdingEdge = context.ValueRO.onEdge && !context.ValueRO.releasedWall && jumpActionStartPass;
                 context.ValueRW.releasedWall = context.ValueRW.releasedWall && !context.ValueRO.onSurface; 
             }
         }
