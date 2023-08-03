@@ -26,7 +26,7 @@ namespace TIC.FunnyStarts
                 float2 inputDirectionValue = directionProjectionAspect.inputDirection.ValueRO.value;
                 float3 forward = new float3(inputDirectionValue.x, 0.0f, inputDirectionValue.y);
 
-                if (context.climbing)
+                if (context.climbing && !context.inJumpStartPhase)
                 {
                     float3 normal = directionProjectionAspect.surfaceNormal.ValueRO.value;
 

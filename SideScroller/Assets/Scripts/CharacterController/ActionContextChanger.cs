@@ -10,19 +10,24 @@ namespace TIC.FunnyStarts
         protected override void OnUpdate()
         {
             EntityQuery unfellableActions = GetEntityQuery(ComponentType.ReadOnly<UnfellableActionTag>());
-            EntityQuery jumpActions = GetEntityQuery(ComponentType.ReadOnly<JumpData>());
+            EntityQuery jumpActions = GetEntityQuery(ComponentType.ReadOnly<FiniteAction>(), ComponentType.ReadOnly<JumpData>());
 
             foreach (var context in SystemAPI.Query<RefRW<Context>>())
             {
                 context.ValueRW.inUnfellableAction = unfellableActions.CalculateEntityCount() > 0;
                 context.ValueRW.inJump = jumpActions.CalculateEntityCount() > 0;
-                context.ValueRW.climbing = context.ValueRO.onVerticalPlane && !context.ValueRO.releasedWall && !context.ValueRO.onSurface;
 
-                if (context.ValueRW.releasedWall)
+                bool jumpActionStartPass = true;
+                if (context.ValueRW.inJump)
                 {
-                    context.ValueRW.releasedWall = !context.ValueRO.onSurface;
+                    FiniteAction finiteAction = jumpActions.GetSingleton<FiniteAction>();
+                    context.ValueRW.inJumpStartPhase = finiteAction.timer >= (.75f) *(finiteAction.time);
+                    jumpActionStartPass = !(finiteAction.timer < .75f * finiteAction.time);
                 }
-                    
+
+                context.ValueRW.climbing = context.ValueRO.onVerticalPlane && !context.ValueRO.releasedWall && !context.ValueRO.onSurface && jumpActionStartPass;
+
+                context.ValueRW.releasedWall = context.ValueRW.releasedWall && !context.ValueRO.onSurface; 
             }
         }
     }
