@@ -8,5 +8,13 @@ namespace TIC.FunnyStarts
 {
     public struct PlayerTag : IComponentData {}
     public struct RequestTag : IComponentData {}
+    public struct AffectedByContextTag : IComponentData { }
+    public struct SurfaceTag : IComponentData { }  
+    public struct NearCoverTriggerTag : IComponentData { }
+    public struct NearWallTriggerTag : IComponentData { }
+    public struct NearEdgeTriggerTag : IComponentData { }
+    public struct EdgeTriggerTag : IComponentData { }
+    public struct VerticalPlaneTag : IComponentData { }
+    public struct UnfellableActionTag : IComponentData { }
 }
     

@@ -20,7 +20,13 @@ namespace TIC.FunnyStarts
         protected override void OnCreate()
         {
             RequireForUpdate<PlayerTag>();
+
             RequireForUpdate<InputDirection>();
+            RequireForUpdate<InputJumpHold>();
+            RequireForUpdate<InputAim>();
+            RequireForUpdate<InputBlock>();
+            RequireForUpdate<InputSprint>();
+            RequireForUpdate<InputCrouch>();
 
             _movementActions = new MovementActions();
         }
@@ -30,6 +36,9 @@ namespace TIC.FunnyStarts
             _movementActions.Enable();
             _movementActions.KeyboardMouse.Jump.performed += OnPlayerJump;
             _movementActions.KeyboardMouse.Shoot.performed += OnPlayerShoot;
+            _movementActions.KeyboardMouse.Reload.performed += OnPlayerReload;
+            _movementActions.KeyboardMouse.WallRelease.performed += OnPlayerCrouch;
+            
 
             _playerEntity = SystemAPI.GetSingletonEntity<PlayerTag>();
         }
@@ -41,6 +50,36 @@ namespace TIC.FunnyStarts
                 InputAction moveDirection = _movementActions.KeyboardMouse.MoveDirection;
                 inputDirection.ValueRW.value = moveDirection.ReadValue<Vector2>();
             }
+
+            foreach (var inputJumpHold in SystemAPI.Query<RefRW<InputJumpHold>>())
+            {
+                InputAction inputJumpHoldAction = _movementActions.KeyboardMouse.JumpHold;
+                inputJumpHold.ValueRW.value = inputJumpHoldAction.ReadValue<float>();
+            }
+
+            foreach (var inputAim in SystemAPI.Query<RefRW<InputAim>>())
+            {
+                InputAction inputAimAction = _movementActions.KeyboardMouse.Aim;
+                inputAim.ValueRW.value = inputAimAction.ReadValue<float>();
+            }
+
+            foreach (var inputBlock in SystemAPI.Query<RefRW<InputBlock>>())
+            {
+                InputAction inputBlockAction = _movementActions.KeyboardMouse.Block;
+                inputBlock.ValueRW.value = inputBlockAction.ReadValue<float>();
+            }
+
+            foreach (var inputSprint in SystemAPI.Query<RefRW<InputSprint>>())
+            {
+                InputAction inputSprintAction = _movementActions.KeyboardMouse.Sprint;
+                inputSprint.ValueRW.value = inputSprintAction.ReadValue<float>();
+            }
+
+            foreach (var inputCrouch in SystemAPI.Query<RefRW<InputCrouch>>())
+            {
+                InputAction inputCrouchAction = _movementActions.KeyboardMouse.Crouch;
+                inputCrouch.ValueRW.value = inputCrouchAction.ReadValue<float>();
+            }
         }
 
         protected override void OnStopRunning()
@@ -48,6 +87,9 @@ namespace TIC.FunnyStarts
             _movementActions.Disable();
             _movementActions.KeyboardMouse.Jump.performed -= OnPlayerJump;
             _movementActions.KeyboardMouse.Shoot.performed -= OnPlayerShoot;
+            _movementActions.KeyboardMouse.Reload.performed -= OnPlayerReload;
+            _movementActions.KeyboardMouse.WallRelease.performed -= OnPlayerCrouch;
+
             _playerEntity = Entity.Null;
         }
 
@@ -64,6 +106,23 @@ namespace TIC.FunnyStarts
             EntityManager.AddComponent<RequestTag>(newEntity);
         }
 
+        private void OnPlayerCrouch(InputAction.CallbackContext callbackContext)
+        {
+            if (callbackContext.performed)
+            {
+                if (!SystemAPI.Exists(_playerEntity)) return;
+
+                Entity newEntity = EntityManager.CreateEntity();
+                CrouchRequest crouchRequest = new CrouchRequest()
+                {
+                    playerEntity = _playerEntity
+                };
+                EntityManager.AddComponentData<CrouchRequest>(newEntity, crouchRequest);
+                EntityManager.AddComponent<RequestTag>(newEntity);
+            }
+            
+        }
+
         private void OnPlayerShoot (InputAction.CallbackContext callbackContext)
         {
             if (!SystemAPI.Exists(_playerEntity)) return;
@@ -73,6 +132,18 @@ namespace TIC.FunnyStarts
                 playerEntity = _playerEntity
             };
             EntityManager.AddComponentData<ShootRequest>(newEntity, shootRequest);
+            EntityManager.AddComponent<RequestTag>(newEntity);
+        }
+
+        private void OnPlayerReload (InputAction.CallbackContext callbackContext)
+        {
+            if (!SystemAPI.Exists(_playerEntity)) return;
+            Entity newEntity = EntityManager.CreateEntity();
+            ReloadRequest reloadRequest = new ReloadRequest()
+            {
+                playerEntity = _playerEntity
+            };
+            EntityManager.AddComponentData<ReloadRequest>(newEntity, reloadRequest);
             EntityManager.AddComponent<RequestTag>(newEntity);
         }
     } 

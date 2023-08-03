@@ -8,6 +8,7 @@ namespace TIC.FunnyStarts
         public float surfaceSpeed;
         public float climbSpeed;
         public float coverSpeed;
+        public float fellSpeed;
     }
 
     public class SpeedParametrsBaker : Baker<SpeedParametrsAuthoring>
@@ -19,7 +20,8 @@ namespace TIC.FunnyStarts
             {
                 surfaceSpeedParametr = authoring.surfaceSpeed,
                 climbSpeedParametr = authoring.climbSpeed,
-                coverSpeedParametr = authoring.coverSpeed
+                coverSpeedParametr = authoring.coverSpeed,
+                fellSpeedParametr = authoring.fellSpeed
             };
             AddComponent(entity, component);
         }

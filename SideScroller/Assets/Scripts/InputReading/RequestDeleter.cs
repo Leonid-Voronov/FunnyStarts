@@ -12,7 +12,7 @@ namespace TIC.FunnyStarts
      */
 
     [UpdateInGroup(typeof(InitializationSystemGroup), OrderLast = false)]
-    public partial class InputRequestDeleter : SystemBase
+    public partial class RequestDeleter : SystemBase
     {
         protected override void OnCreate()
         {

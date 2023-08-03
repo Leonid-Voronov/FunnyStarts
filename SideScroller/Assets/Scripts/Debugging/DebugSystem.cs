@@ -6,11 +6,24 @@ using UnityEngine;
 
 public partial class DebugSystem : SystemBase
 {
+    protected override void OnStartRunning()
+    {
+        //DebugOnStart();
+    }
+
     protected override void OnUpdate()
     {
-        foreach (var shootRequest in SystemAPI.Query<ShootRequest>()) 
+        foreach (var reloadRequest in SystemAPI.Query<ReloadRequest>()) 
         {
-            //Debug.Log(shootRequest.playerEntity);  
+            //Debug.Log(reloadRequest.playerEntity);  
         }
+    }
+
+    private void DebugOnStart()
+    {
+        Entity newEntity = EntityManager.CreateEntity();
+        ColorChangingRequest request = new ColorChangingRequest() { colorName = ColorName.Air };
+        EntityManager.AddComponentData(newEntity, request);
+        EntityManager.AddComponent<RequestTag>(newEntity);
     }
 }

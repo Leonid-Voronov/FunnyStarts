@@ -1,5 +1,6 @@
 using Unity.Entities;
 using Unity.Mathematics;
+using UnityEngine.ProBuilder;
 
 namespace TIC.FunnyStarts
 {
@@ -21,13 +22,53 @@ namespace TIC.FunnyStarts
         {
             foreach (DirectionProjectionAspect directionProjectionAspect in SystemAPI.Query<DirectionProjectionAspect>())
             {
+                Context context = directionProjectionAspect.context.ValueRO;
                 float2 inputDirectionValue = directionProjectionAspect.inputDirection.ValueRO.value;
                 float3 forward = new float3(inputDirectionValue.x, 0.0f, inputDirectionValue.y);
-                float3 normal = directionProjectionAspect.surfaceNormal.ValueRO.value;
 
-                directionProjectionAspect.movingDirection.ValueRW.value = forward - math.dot(forward, normal) * normal;
+                if (context.holdingEdge && !context.inJumpStartPhase)
+                {
+                    float3 normal = directionProjectionAspect.surfaceNormal.ValueRO.value;
+
+                    if (normal.x < 0.5f)
+                        forward = new float3(inputDirectionValue.x, 0.0f, 0.0f);
+                    else
+                        forward = new float3(0.0f, 0.0f, inputDirectionValue.x);
+
+
+                    directionProjectionAspect.movingDirection.ValueRW.value = forward - math.dot(forward, normal) * normal;
+                }
+                else if (context.climbing && !context.inJumpStartPhase)
+                {
+                    float3 normal = directionProjectionAspect.surfaceNormal.ValueRO.value;
+                    if (normal.x < 0.5f)
+                        forward = new float3(inputDirectionValue.x, inputDirectionValue.y, 0.0f);
+                    else
+                        forward = new float3(0.0f, inputDirectionValue.y, inputDirectionValue.x);
+
+                    directionProjectionAspect.movingDirection.ValueRW.value = forward - math.dot(forward, normal) * normal;
+                }
+                else if (context.inJump)
+                {
+                    float3 upDirection = new float3(0, 1f, 0);
+                    directionProjectionAspect.movingDirection.ValueRW.value = forward + upDirection;
+                }
+                else if (context.onSurface)
+                {
+                    float3 normal = directionProjectionAspect.surfaceNormal.ValueRO.value;
+                    directionProjectionAspect.movingDirection.ValueRW.value = forward - math.dot(forward, normal) * normal;
+                }
+                else if (!context.inUnfellableAction)
+                {
+                    float3 downDirection = new float3(0, -1f, 0);
+                    directionProjectionAspect.movingDirection.ValueRW.value = forward + downDirection;
+                }
             }
         }
     }
+
+    
+
+
 }
 

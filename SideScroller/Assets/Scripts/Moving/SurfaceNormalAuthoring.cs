@@ -6,7 +6,6 @@ namespace TIC.FunnyStarts
 {
     public class SurfaceNormalAuthoring : MonoBehaviour
     {
-        public float3 value;
     }
 
     public class SurfaceNormalBaker : Baker<SurfaceNormalAuthoring>
@@ -14,12 +13,7 @@ namespace TIC.FunnyStarts
         public override void Bake(SurfaceNormalAuthoring authoring)
         {
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
-
-            SurfaceNormal component = new SurfaceNormal()
-            {
-                value = authoring.value
-            };
-
+            SurfaceNormal component = new SurfaceNormal();
             AddComponent(entity, component);
 
         }

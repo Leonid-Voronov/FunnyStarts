@@ -1,56 +1,53 @@
-using TIC.FunnyStarts;
 using Unity.Entities;
-using Unity.Mathematics;
-using Unity.Physics;
 using Unity.Physics.Stateful;
+using UnityEngine;
+using System.Collections.Generic;
+using System.Collections;
+using Unity.Mathematics;
 
-/*
- * Summary
- * This system detects collision between PhysicsShape entities and PhysicsBody entities
- */
-public partial class CollisionDetection : SystemBase
+namespace TIC.FunnyStarts
 {
-    protected override void OnCreate()
+    public readonly partial struct AffectedByContextAspect : IAspect
     {
-        RequireForUpdate<StatefulCollisionEvent>();
-    }
-    protected override void OnUpdate()
-    {
-        foreach (var buffer in SystemAPI.Query<DynamicBuffer<StatefulCollisionEvent>>())
-        {
-            if (!buffer.IsEmpty) 
-            {
-                for (int i = 0; i < buffer.Length ; i++) 
-                {
-                    var statefulCollisionEvent = buffer[i];
+        public readonly Entity entity;
 
-                    float3 normal = statefulCollisionEvent.Normal;
-                    WriteNormalToComponent(GetPVEntity(statefulCollisionEvent), normal);
+        public readonly RefRW<Context> context;
+        public readonly DynamicBuffer<StatefulCollisionEvent> statefulCollisionEvents;
+        public readonly DynamicBuffer<StatefulTriggerEvent> statefulTriggerEvents;
+    }
+
+    public partial class CollisionDetection : SystemBase
+    {
+        protected override void OnCreate()
+        {
+            RequireForUpdate<StatefulCollisionEvent>();
+            RequireForUpdate<SurfaceTag>();
+        }
+        protected override void OnUpdate()
+        {
+            foreach (var aspect in SystemAPI.Query<AffectedByContextAspect>())
+            {
+                Entity affectedEntity = aspect.entity;
+                Context context = aspect.context.ValueRW;
+                DynamicBuffer<StatefulCollisionEvent> buffer = aspect.statefulCollisionEvents;
+                int surfaceCount = 0;
+
+                if (!buffer.IsEmpty)
+                {
+                    for (int i = 0; i < buffer.Length; i++)
+                    {
+                        StatefulCollisionEvent collisionEvent = buffer[i];
+                        Entity environmentEntity = collisionEvent.GetOtherEntity(affectedEntity);
+                        
+                        if (SystemAPI.HasComponent<SurfaceTag>(environmentEntity))
+                            surfaceCount++;
+                    }
                 }
+
+                aspect.context.ValueRW.onSurface = surfaceCount > 0;
             }
         }
-    }
 
-    private void WriteNormalToComponent(Entity entity, float3 newNormal)
-    {
-        if (SystemAPI.HasComponent<SurfaceNormal>(entity))
-        {
-            RefRW<SurfaceNormal> surfaceNormal = SystemAPI.GetComponentRW<SurfaceNormal>(entity); 
-            surfaceNormal.ValueRW.value = newNormal;
-        }
-    }
-
-    //Get Entity with Physics Velocity component
-    private Entity GetPVEntity (StatefulCollisionEvent collisionEvent)
-    {
-        bool a = SystemAPI.HasComponent<PhysicsVelocity>(collisionEvent.EntityA);
-        bool b = SystemAPI.HasComponent<PhysicsVelocity>(collisionEvent.EntityB);
-
-        if (a)
-            return collisionEvent.EntityA;
-        else if (b)
-            return collisionEvent.EntityB;
-        else
-            return Entity.Null;
     }
 }
+
