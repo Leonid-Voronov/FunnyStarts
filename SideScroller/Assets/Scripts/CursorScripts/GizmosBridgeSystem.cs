@@ -1,8 +1,10 @@
 ﻿using Unity.Entities;
 using Unity.Mathematics;
+using UnityEngine;
 
 namespace TIC.FunnyStarts
 {
+    [UpdateInGroup(typeof(SimulationSystemGroup), OrderLast = false)]
     public partial class GizmosBridgeSystem : SystemBase
     {
         /*
@@ -10,9 +12,12 @@ namespace TIC.FunnyStarts
         */
         protected override void OnUpdate()
         {
-            WorldCursorPosition wp = SystemAPI.GetSingleton<WorldCursorPosition>();
-            float3 pos3 = new float3(0,0,0);
-            GizmosDrawer.gizmos.WriteData(pos3, wp._worldCursorPosition);
+            foreach (var shootRequest in SystemAPI.Query<RefRO<ShootRequest>>())
+            {
+                var cp = SystemAPI.GetSingleton<CursorPosition>();
+                var pos3 = new float3(0, 0, 0);
+                GizmosDrawer.gizmos.WriteData(pos3, cp.cursorPosition);
+            }
         }
     }
 }
