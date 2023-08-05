@@ -19,11 +19,19 @@ namespace TIC.FunnyStarts
             {
                 foreach (var jumpRequest in SystemAPI.Query<JumpRequest>())
                 {
-                    Entity newEntity = ecb.CreateEntity();
-                    ecb.AddComponent<FiniteAction>(newEntity);
-                    ecb.SetComponent(newEntity, new FiniteAction { time = jumpTime, timer = jumpTime });
-                    ecb.AddComponent<JumpData>(newEntity);
-                    ecb.AddComponent<UnfellableActionTag>(newEntity);
+                    RefRW<Context> context = SystemAPI.GetComponentRW<Context>(jumpRequest.playerEntity);
+
+                    if (context.ValueRO.onSurface || context.ValueRO.climbing || context.ValueRO.holdingEdge)
+                    {
+                        Entity newEntity = ecb.CreateEntity();
+                        ecb.AddComponent<FiniteAction>(newEntity);
+                        ecb.SetComponent(newEntity, new FiniteAction { time = jumpTime, timer = jumpTime });
+                        ecb.AddComponent<JumpData>(newEntity);
+                        ecb.AddComponent<UnfellableActionTag>(newEntity);
+
+                        //if (context.ValueRW.inCrouch)
+                        //    context.ValueRW.inCrouch = false;
+                    }
                 }
             }
             

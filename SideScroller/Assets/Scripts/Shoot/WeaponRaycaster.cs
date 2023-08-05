@@ -25,8 +25,8 @@ namespace TIC.FunnyStarts
                     End = shootRaycast.ValueRO.target,
                 };
                 
-                Debug.Log(shootRaycast.ValueRO.start);
-                Debug.Log(shootRaycast.ValueRO.target);
+                //Debug.Log(shootRaycast.ValueRO.start);
+                //Debug.Log(shootRaycast.ValueRO.target);
                 
                 var hit = world.CastRay(input, out var rayResult);
                 UnityEngine.Debug.DrawRay(input.Start, input.End - input.Start);

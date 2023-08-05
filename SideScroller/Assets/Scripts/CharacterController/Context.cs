@@ -25,5 +25,6 @@ namespace TIC.FunnyStarts
 
         public bool climbing;
         public bool releasedWall;
+        public bool inCrouch;
     }
 }
