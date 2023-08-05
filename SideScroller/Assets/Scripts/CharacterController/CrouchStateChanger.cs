@@ -1,9 +1,11 @@
+using System.Collections;
+using System.Collections.Generic;
 using Unity.Entities;
 using UnityEngine;
 
 namespace TIC.FunnyStarts
 {
-    public partial class ReleaseWallActionMaker : SystemBase
+    public partial class CrouchStateChanger : SystemBase
     {
         protected override void OnUpdate()
         {
@@ -13,8 +15,8 @@ namespace TIC.FunnyStarts
                 Entity playerEntity = crouchRequest.playerEntity;
                 RefRW<Context> context = SystemAPI.GetComponentRW<Context>(playerEntity);
 
-                if (context.ValueRO.onVerticalPlane || context.ValueRO.onEdge)
-                    context.ValueRW.releasedWall = !context.ValueRW.releasedWall;
+                if (context.ValueRO.onSurface)
+                    context.ValueRW.inCrouch = !context.ValueRW.inCrouch;
             }
         }
     }

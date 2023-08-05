@@ -641,7 +641,7 @@ PlayerSettings:
   webGLPowerPreference: 2
   scriptingDefineSymbols:
     Server: PROBUILDER_EXPERIMENTAL_FEATURES
-    Standalone: PROBUILDER_EXPERIMENTAL_FEATURES;UNITY_PHYSICS_CUSTOM
+    Standalone: PROBUILDER_EXPERIMENTAL_FEATURES;UNITY_PHYSICS_CUSTOM;UNITY_BURST_EXPERIMENTAL_ATOMIC_INTRINSICS
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
